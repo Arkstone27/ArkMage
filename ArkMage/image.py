@@ -7,8 +7,8 @@ import sys
 import numpy as np
 from numba import njit, prange
 
-from sources.socle.stats_data import Stats_Data, afficher_stats
-from sources.socle.rotation import rotation_data
+from ArkMage.stats_data import Stats_Data, afficher_stats
+from ArkMage.rotation import rotation_data
 
 @njit()
 def fonction_base(valeur, *args):

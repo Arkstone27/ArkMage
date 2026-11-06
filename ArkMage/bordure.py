@@ -1,6 +1,6 @@
-from sources.socle.image import Pixels, ouvrir_image, convolution_vecteurs
-from sources.socle.commun import flou_classique_fast, calcul_distance, conversion_gris
-from sources.socle.scaling import meilleur_winsorisation
+from image import Pixels, ouvrir_image, convolution_vecteurs
+from commun import flou_classique_fast, calcul_distance, conversion_gris
+from scaling import meilleur_winsorisation
 
 import numpy as np
 from numba import njit, prange

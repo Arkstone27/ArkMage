@@ -1,4 +1,4 @@
-from sources.socle.image import Pixels, ouvrir_image, convolution_vecteurs
+from image import Pixels, ouvrir_image, convolution_vecteurs
 
 from numba import njit, prange
 import numpy as np

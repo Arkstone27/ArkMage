@@ -1,6 +1,4 @@
-from sources.socle.autre import mesure_vitesse
-from sources.socle.image import Pixels, ouvrir_image
-from sources.socle.bordure import calcul_bord
+from image import Pixels, ouvrir_image
 
 import numpy as np
 from numba import njit, prange

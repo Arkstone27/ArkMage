@@ -1,5 +1,5 @@
-from sources.socle.stats_data import Stats_Data, afficher_stats
-from sources.socle.image import appliquer_fast
+from stats_data import Stats_Data
+from image import appliquer_fast
 
 import numpy as np
 from numba import njit
