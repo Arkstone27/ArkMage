@@ -1,6 +1,6 @@
-from image import Pixels, ouvrir_image, convolution_vecteurs
-from commun import flou_classique_fast, calcul_distance, conversion_gris
-from scaling import meilleur_winsorisation
+from ArkMage.image import Pixels, ouvrir_image, convolution_vecteurs
+from ArkMage.commun import flou_classique_fast, calcul_distance, conversion_gris
+from ArkMage.scaling import meilleur_winsorisation
 
 import numpy as np
 from numba import njit, prange

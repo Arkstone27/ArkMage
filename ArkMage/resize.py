@@ -1,4 +1,4 @@
-from image import Pixels, ouvrir_image
+from ArkMage.image import Pixels, ouvrir_image
 
 import numpy as np
 from numba import njit, prange

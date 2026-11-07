@@ -1,5 +1,5 @@
-from stats_data import Stats_Data
-from image import appliquer_fast
+from ArkMage.stats_data import Stats_Data
+from ArkMage.image import appliquer_fast
 
 import numpy as np
 from numba import njit
