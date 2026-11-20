@@ -1,14 +1,16 @@
 from PIL import Image
+import pillow_jxl
 import plotly.express as px
 
 from PySide6.QtWidgets import QFileDialog, QApplication
 import sys
+from pathlib import Path
 
 import numpy as np
 from numba import njit, prange
 
 from ArkMage.stats_data import Stats_Data, afficher_stats
-from ArkMage.rotation import rotation_data
+from ArkMage.couleurs import hsv_to_rgb
 
 @njit()
 def fonction_base(valeur, *args):
@@ -45,7 +47,11 @@ class Pixels:
             img_data = np.squeeze(self.data) * 255.0
             mode_couleur = "L"
         else:
-            img_data = np.clip(self.data * 255.0, 0, 255)
+            if self.mode_couleur == "HSV":
+                data = appliquer_fast(self.data, hsv_to_rgb, self.data.shape)
+            else:
+                data = self.data   
+            img_data = np.clip(data * 255.0, 0, 255)
             mode_couleur = self.mode_couleur
 
         img_data = img_data.astype(np.uint8)
@@ -80,9 +86,11 @@ class Pixels:
         fig.show()
 
 
-    def sauvegarde(self):
-        app = QApplication(sys.argv)
-        chemin_sauvegarde = QFileDialog.getOpenFileName(None, "Selectionner une image", "", "Images (*.png *.jpg *.jpeg)")[0]
+    def sauvegarde(self, chemin_sauvegarde=""):
+        if chemin_sauvegarde == "":
+            if not QApplication.instance():
+                app = QApplication(sys.argv)
+            chemin_sauvegarde = QFileDialog.getSaveFileName(None, "Sauvegarder l'image", "", "Images (*.png *.jpg *.jpeg, *.jxl)")[0]
 
         if chemin_sauvegarde:
             self.conversion_img().save(chemin_sauvegarde)
@@ -98,10 +106,6 @@ class Pixels:
             self.table_sommes = creation_table_sommes(self.data)
         return self.table_sommes
 
-    def rotation(self, angle: int):
-        data_tourner = rotation_data(self.data, angle)
-
-        return Pixels(data_tourner, self.mode_couleur)
 
 def charger_image(chemin: str):
     img = Image.open(chemin)
@@ -115,12 +119,13 @@ def charger_image(chemin: str):
         return plan
     return img
 
-def ouvrir_image(image_test=False):
-    if image_test:
-        chemin = "C:\\Users\Matteo\Documents\Projets\ArkBrick\sources\socle\\test.jpg"
-    else:
+def ouvrir_image(chemin=""):
+    if not QApplication.instance():
         app = QApplication(sys.argv)
-        chemin = QFileDialog.getOpenFileName(None, "Selectionner une image", "", "Images (*.png *.jpg *.jpeg)")[0]
+
+    chemin = QFileDialog.getOpenFileName(None, "Selectionner une image", "", "Images (*.png *.jpg *.jpeg, *.jxl)")[0]
+    
+    if chemin == "":chemin = Path(".", "ArkMage","test.jpg")
 
     img = charger_image(chemin)
     return Pixels.img_to_pixels(img)
@@ -198,10 +203,7 @@ def creation_table_sommes(data):
 
 if __name__ == '__main__':
 
-    pixels = ouvrir_image(False)
-
-    pixels_tourner = pixels.rotation(270)
-    pixels_tourner.show()
+    pixels = ouvrir_image()
 
     pixels.convolution(np.ones((3,3)), fonction_base)
 
@@ -211,3 +213,4 @@ if __name__ == '__main__':
     afficher_stats(pixels.stats)
     
     pixels.show()
+    pixels.sauvegarde()

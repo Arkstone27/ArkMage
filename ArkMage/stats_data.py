@@ -237,14 +237,6 @@ def generer_graphe_central(stats_image):
     return figure_central
 
 def afficher_stats(stats_image):
-    # figure = make_subplots(
-    #     rows=3, cols=3,
-    #     specs=[
-    #         [{"rowspan": 3, "colspan": 2}, None, {"type": "domain"}],
-    #         [None, None, {"type": "domain"}],
-    #         [None, None, {"type": "domain"}]
-    #     ])
-
     figure_central = generer_graphe_central(stats_image)
     # generer_indicateurs(stats_data)
     figure_central.show()
