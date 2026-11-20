@@ -83,6 +83,15 @@ def conversion_gris(pixels):
         return pixels.appliquer(teinte_de_gris, "L")
     return pixels
 
+def conversion_binaire(pixels, seuil: int):
+    if pixels.mode_couleur in ("RGB", "RGBA"):
+        pixels = conversion_gris(pixels)
+
+    if pixels.mode_couleur == "L":
+        data_binaire = pixels.data < seuil/255.0
+
+        return Pixels(data_binaire, "B")
+    return pixels
 @njit
 def denoising_fast(data, table_sommes, rayon: int=1):
     data_flou = flou_classique_fast(table_sommes, rayon)
@@ -108,7 +117,7 @@ def denoising(pixels, rayon: int=1):
     return Pixels(data_denoise, pixels.mode_couleur)
 
 if __name__ == '__main__':
-    pixels = ouvrir_image()
+    pixels = ouvrir_image(True)
     pixels.show()
 
     pixels_flou = flou_classique(pixels, 2)
@@ -119,6 +128,9 @@ if __name__ == '__main__':
 
     pixels_gris = conversion_gris(pixels)
     pixels_gris.show()
+
+    pixels_binaire = conversion_binaire(pixels_gris, 128)
+    pixels_binaire.show()
 
     pixels_denoise = denoising(pixels)
     pixels_denoise.show()
