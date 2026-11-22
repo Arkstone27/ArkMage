@@ -17,13 +17,13 @@ def fonction_base(valeur, *args):
     return valeur
 
 class Pixels:
-    def __init__(self, data, mode_couleur="RGB"):
+    def __init__(self, data, mode_couleur=""):
         if data.ndim == 2:
             self.data = data[:, :, np.newaxis].astype(np.float32, copy=False)
         else:
             self.data = data.astype(np.float32, copy=False)
 
-        self.mode_couleur = mode_couleur
+        self.mode_couleur = mode_couleur if mode_couleur else ("L", "", "RGB", "RGBA")[self.data.shape[2] - 1]
         self.table_sommes = None
         self.stats = Stats_Data(self.data, True)
 
@@ -125,7 +125,7 @@ def ouvrir_image(chemin=""):
 
     chemin = QFileDialog.getOpenFileName(None, "Selectionner une image", "", "Images (*.png *.jpg *.jpeg, *.jxl)")[0]
     
-    if chemin == "":chemin = Path(".", "ArkMage","test.jpg")
+    if chemin == "":chemin = Path("test.jpg")
 
     img = charger_image(chemin)
     return Pixels.img_to_pixels(img)
@@ -213,4 +213,3 @@ if __name__ == '__main__':
     afficher_stats(pixels.stats)
     
     pixels.show()
-    pixels.sauvegarde()
