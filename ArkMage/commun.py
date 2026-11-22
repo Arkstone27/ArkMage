@@ -81,6 +81,8 @@ def teinte_de_gris(couleur):
 def conversion_gris(pixels):
     if pixels.mode_couleur in ("RGB","RGBA"):
         return pixels.appliquer(teinte_de_gris, "L")
+    elif pixels.mode_couleur == "HSV":
+        return Pixels(pixels.data[:, :, 2], "L")
     return pixels
 
 def conversion_binaire(pixels, seuil: int):
