@@ -99,6 +99,9 @@ def norm_min_max(data, maximum, minimum):
     data_normaliser = np.empty(data.shape, dtype=np.float32)
 
     ecart = maximum - minimum
+    for c in range(n_canaux):
+        if ecart[c] == 0: ecart[c] += 0.00001
+
     for x in prange(w):
         for y in range(h):
             data_normaliser[x, y] = (data[x, y] - minimum) / ecart
