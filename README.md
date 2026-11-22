@@ -1,5 +1,7 @@
 # ArkMage
-![Python](https://img.shields.io/badge/python-3.9+-blue.svg)
+![Python](https://img.shields.io/badge/python-3.9+-blue.svg?style=flat&logo=python&logoColor=white)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL_v3-blue.svg?logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-3.0)
+[![Numba](https://img.shields.io/badge/Numba-njit-%233776ab?style=flat&logo=python&logoColor=white)](https://numba.pydata.org)
 
 A simple Python package for hassle-free image processing. (Note: The internal function names and code are written in French).
 
