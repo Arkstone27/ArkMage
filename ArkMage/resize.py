@@ -111,6 +111,14 @@ def resize_bilineaire(pixels: Pixels, new_w: int | float, new_h: int | float):
     data_resize = resize_bilineaire_fast(pixels.data, new_w, new_h, pixels.data.shape)
     return Pixels(data_resize, pixels.mode_couleur)
 
+def conservation_ratio(new_w: int, new_h: int, pixels: Pixels):
+    w, h, n_canaux = pixels.data.shape
+    ratio = w / h
+
+    if new_w == 0:
+        return round(new_h / ratio), new_h
+    return new_w, round(ratio * new_w)
+
 if __name__ == '__main__':
     pixels = ouvrir_image(False)
 
